@@ -5,9 +5,10 @@ var gulp  = require('gulp'),
   rename = require('gulp-rename'),
   postcss      = require('gulp-postcss'),
   autoprefixer = require('autoprefixer');
+  browserSync = require('browser-sync').create();
 
 gulp.task('build-theme', function() {
-  return gulp.src(['scss/*.scss'])
+  return gulp.src(['src/scss/*.scss'])
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss([ autoprefixer({ browsers: [
@@ -21,15 +22,32 @@ gulp.task('build-theme', function() {
       'Android >= 4',
       'Opera >= 12']})]))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('css/'))
+    .pipe(gulp.dest('src/css/'))
     .pipe(cleanCss())
     .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('css/'))
+    .pipe(gulp.dest('src/css/'))
 });
 
 gulp.task('watch', ['build-theme'], function() {
   gulp.watch(['scss/*.scss'], ['build-theme']);
 });
+
+gulp.task('build-watch', ['build-theme'], function(done) {
+  browserSync.reload();
+  done();
+})
+
+gulp.task('serve', ['build-theme'], function () {
+  browserSync.init({
+      server: {
+          baseDir: "./src",
+          index: "index.html"
+      }
+  });
+  gulp.watch(['node_modules/bootstrap/scss/bootstrap.scss', 'src/scss/*.scss'], ['build-watch']);
+  gulp.watch("src/index.html").on('change', browserSync.reload);
+});
+
 
 gulp.task('default', ['build-theme'], function() {
 });

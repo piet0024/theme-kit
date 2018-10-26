@@ -16,16 +16,19 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
+    "natives": "^1.1.5",
     "popper.js": "^1.14.3"
   },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
+    "browser-sync": "^2.24.7",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.3",
     "gulp-postcss": "^7.0.1",
     "gulp-rename": "*",
     "gulp-sass": "^4.0.1",
     "gulp-scss-lint": "^0.6.1",
+    "gulp-serve": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4"
   }
 }
